@@ -1,0 +1,2 @@
+# Algorithm
+Daily algorithm practice 
