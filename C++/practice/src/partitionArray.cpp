@@ -6,7 +6,7 @@ int partitionArray(vector<int> &nums, int k) {
     int start = 0, end = nums.size() - 1;
     // 2. 开始循环，循环条件为指针相遇前，
     //    相遇时刻也要进行一次循环（有等于号），即 左指针 <=  右指针
-    while(start <= end)
+    while(start <= end) // 为什么要有等于，因为在 [start][][end]的时候，可以再做一次，让start，end 停在该停的位置。
     {
         // 3. 循环跳过左边满足条件的点
         while(start <= end && nums[start] < k)
