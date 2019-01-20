@@ -6,7 +6,7 @@ int partitionArray(vector<int> &nums, int k) {
     int start = 0, end = nums.size() - 1;
     // 2. 开始循环，循环条件为指针相遇前，
     //    相遇时刻也要进行一次循环（有等于号），即 左指针 <=  右指针
-    while(start <= end) // 为什么要有等于，因为在 [start][][end]的时候，可以再做一次，让start，end 停在该停的位置。
+    while(start <= end) // 为什么要有等于，因为在 [start][][end]的时候，可以再做一次，让start，end 停在该停的位置。start >= K 的第一个数
     {
         // 3. 循环跳过左边满足条件的点
         while(start <= end && nums[start] < k)
@@ -19,7 +19,7 @@ int partitionArray(vector<int> &nums, int k) {
             end--;
         }
         
-        // 5. 交换不满足条件的点
+        // 5. 交换不满足条件的点（想象在左右阵营交换人质）
         //    要记住这里要加上判断左指针小于等于右指针，
         //    如果不加if，什么情况下 左指针 > 右指针 我也不知道，反正之前没加在Lintcode上报错了
         if(start <= end){
