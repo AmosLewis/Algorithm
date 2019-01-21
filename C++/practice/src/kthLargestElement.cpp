@@ -1,3 +1,23 @@
+/*
+5. Kth Largest Element
+Find K-th largest element in an array.
+
+Example
+In array [9,3,2,4,8], the 3rd largest element is 4.
+
+In array [1,2,3,4,5], the 1st largest element is 5, 2nd largest element is 4, 3rd largest element is 3 and etc.
+
+Challenge
+O(n) time, O(1) extra memory.
+
+Notice
+You can swap elements in the array
+*/
+
+// 法一 最小堆
+// 时间复杂度是 O(NlogK),
+// 因为priority_queue插入是logN的
+// 空间复杂度 O(n)
 class Solution {
 public:
     /**
@@ -30,21 +50,102 @@ public:
         return min_heap.top();// top(),O(1)
     }
 };
-// 时间复杂度是 NlogK,
-// 因为priority_queue插入是logN的
-// 空间复杂度
-/*
-5. Kth Largest Element
-Find K-th largest element in an array.
 
-Example
-In array [9,3,2,4,8], the 3rd largest element is 4.
 
-In array [1,2,3,4,5], the 1st largest element is 5, 2nd largest element is 4, 3rd largest element is 3 and etc.
+// 法二 双指针 快速排序，这是最优解，模版，背
+// O(n) time, O(1) extra memory.
+class Solution {
+public:
+    /**
+     * @param n: An integer
+     * @param nums: An array
+     * @return: the Kth largest element
+     */
+    int kthLargestElement(int n, vector<int> &nums) {
+        // write your code here
+        if(nums.size() == 0 || n < 0 || n > nums.size())
+        {
+            return -1;
+        }
+        // 第k大，那么如果数组最终升序，则返回的index = nums.size() - k
+        // 比如[1,2,3,4,5], k = 2时候， index = 5 - 2 = 3， 
+        // nums[index] = nums[3] = 4
+        return partition(nums, 0, nums.size() - 1, nums.size() - n);
+    }
+    
+    int partition(vector<int> &nums, int start, int end, int target_index)
+    {
+        if(start == end)
+        {
+            // [5 1 3 2 4] 2 -> [2 1 3 4(start end) 5]
+            return nums[target_index];
+        }
+        
+        // pivot 是快速排序中的驻点，可以选择首部，尾部，中间，或者随机
+        // geekforgeek.com 中quickSort用的是尾部, 不太好理解记忆
+        // 养成好习惯，自己写以后都用中间
+        int pivot = nums[(start + end) / 2];
+        // 为什么要新建一个left 和right，而不是用start 和 end?
+        // 因为后面的递归，需要用到开始的start, end 的值与
+        // 移动过的left,right共同划分区间
+        int left = start, right = end;
+        
+        // partition 模板
+        // 注意，这里有=，确保left 和right 正好落在该落的位置
+        while(left <= right)
+        {
+            // 跳过左右两边满足 左< pivot < 右 的点
+            // 注意这里无=
+            while(left <= right && nums[left] < pivot)
+            {
+                left++;
+            }
+            while(left <= right && nums[right] > pivot)
+            {
+                right--;
+            }
+            
+            // 交换不满足左< pivot < 右条件的两个点
+            // 使得已经走过的点一定 左< pivot < 右
+            if(left <= right)
+            {
+                swap(nums, left, right);
+                left++;
+                right--;
+            }
+        }
+        
+        // [start <= target_index <= right < left] 
+        // 在[start                  right]之间排序 
+        if(target_index <= right)
+        {
+             // [5 1 3 2 4] 2 
+             // ->[2 1 3 4(start, target) 5(right)] 
+             // ->[2 1 3 4(start tartget right) 5]
+            return partition(nums, start, right, target_index);
+        }
+        // [right < left <= target_index <= end] 
+        // 在       [left                   end]之间排序 
+        if(target_index >=left)
+        {
+            return partition(nums, left, end, target_index);
+        }
+        
+        // left <index <right
+        //[5 1 3 2 4] 3 -> [2 1(right) 3(target) 5(right) 4]
+        return nums[target_index];
+        
+    }
+    
+    // 手写交换数组中两个元素
+    void swap(vector<int> &nums, int left, int right)
+    {
+        int tmp = nums[left];
+        nums[left] = nums[right];
+        nums[right] = tmp;
+        return;
+    }
+    
+};
 
-Challenge
-O(n) time, O(1) extra memory.
 
-Notice
-You can swap elements in the array
-*/
