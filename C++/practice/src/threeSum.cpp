@@ -38,6 +38,7 @@ A solution set is:
 同理，如果两数之和大于target，则我们将右边那个指针j左移一位，使得指向的数字减小一些
 /*
 
+// 83ms
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
@@ -92,5 +93,77 @@ public:
             }
         }
         return results;
+    }
+};
+
+
+// 法2 无sort的解法 660ms
+// 用map[nums[i], count]记录frequency
+// 把map里所有的key放在一个vector里，重复的会连在一起，可以跳过
+// twoSum 从下一个数start 开始搜索，unordered_set 记录某个值 是否存在 与 是否被访问过
+// tmp 值回溯
+
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        // 无sort的解法
+        
+        vector<vector<int>> res;
+        if(nums.size() < 3) return res;
+        
+        // 用map[nums[i], count]记录frequency
+        unordered_map<int, int> mp;
+        for(int i : nums)
+            mp[i]++;
+        
+        // 把map里所有的key放在一个vector里，重复的会连在一起，可以跳过
+        vector<int> arr(nums.size());
+        int k = 0;
+        for(auto& it : mp) 
+        {
+            for(int i = 0; i < it.second; i++) 
+            {
+                arr[k++] = it.first;
+            }
+        }
+        
+        vector<int> tmp;
+        for(int i = 0; i <= arr.size() - 3; i++) 
+        {
+            // 重复的会连在一起 可以判断跳过
+            if(i != 0 && arr[i] == arr[i - 1]) continue;
+            // 简单的twoSum
+            tmp.push_back(arr[i]);
+            // 起始点不是0 而是 i+1， 即当前数字的下个点
+            twoSum(arr, i + 1, arr.size() - 1, tmp, res, -arr[i]);
+            tmp.pop_back();
+        }
+        return res;
+        
+    }
+private:
+    void twoSum(vector<int>& arr, 
+                int start, 
+                int end, 
+                vector<int>& tmp, 
+                vector<vector<int>>& res, 
+                int target) {
+        unordered_set<int> st;// 记录某个 数是否存在
+        unordered_set<int> visited; // 记录某个数是否被访问过
+        
+        for(int i = start; i <= end; i++) {
+            if(st.find(target - arr[i]) != st.end() && //存在
+               visited.find(target - arr[i]) == visited.end()) {//没被访问过
+                tmp.push_back(target - arr[i]);
+                tmp.push_back(arr[i]);
+                res.push_back(tmp);
+                tmp.pop_back();
+                tmp.pop_back();
+                
+                visited.insert(arr[i]);
+                visited.insert(target - arr[i]);
+            }
+            st.insert(arr[i]);
+        }
     }
 };
