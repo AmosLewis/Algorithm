@@ -103,67 +103,85 @@ public:
 // twoSum 从下一个数start 开始搜索，unordered_set 记录某个值 是否存在 与 是否被访问过
 // tmp 值回溯
 
-class Solution {
+class Solution2 {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
         // 无sort的解法
         
-        vector<vector<int>> res;
-        if(nums.size() < 3) return res;
-        
-        // 用map[nums[i], count]记录frequency
-        unordered_map<int, int> mp;
-        for(int i : nums)
-            mp[i]++;
-        
-        // 把map里所有的key放在一个vector里，重复的会连在一起，可以跳过
-        vector<int> arr(nums.size());
-        int k = 0;
-        for(auto& it : mp) 
+        // 边界检查
+        if(nums.size() < 0)
         {
-            for(int i = 0; i < it.second; i++) 
+            return{};
+        }
+        
+        // 返回值
+        vector<vector<int>> results;
+        
+        // map 记录每个数字出现的频率[num, frequency]
+        unordered_map<int, int> mp; 
+        for(auto it:nums)
+        {
+            mp[it]++;
+        }
+        
+        //新建一个数组，把每个重复的数字放到一起，无序
+        vector<int> new_nums;
+        for(auto& it:mp)
+        {
+            for(int i = 0; i < it.second; i++)
             {
-                arr[k++] = it.first;
+                new_nums.push_back(it.first);
             }
         }
         
         vector<int> tmp;
-        for(int i = 0; i <= arr.size() - 3; i++) 
+        for(int i = 0; i < new_nums.size(); i++)
         {
-            // 重复的会连在一起 可以判断跳过
-            if(i != 0 && arr[i] == arr[i - 1]) continue;
-            // 简单的twoSum
-            tmp.push_back(arr[i]);
-            // 起始点不是0 而是 i+1， 即当前数字的下个点
-            twoSum(arr, i + 1, arr.size() - 1, tmp, res, -arr[i]);
+            // 跳过重复的数字
+            if(i && new_nums[i] == new_nums[i-1])
+            {
+                continue;
+            }
+            
+            // 对每一个数字尝试twoSum
+            tmp.push_back(new_nums[i]);
+            twoSum(new_nums, 0-new_nums[i], i + 1, new_nums.size() - 1, tmp, results);
             tmp.pop_back();
         }
-        return res;
+        
+        return results;
         
     }
 private:
-    void twoSum(vector<int>& arr, 
-                int start, 
-                int end, 
-                vector<int>& tmp, 
-                vector<vector<int>>& res, 
-                int target) {
-        unordered_set<int> st;// 记录某个 数是否存在
-        unordered_set<int> visited; // 记录某个数是否被访问过
-        
-        for(int i = start; i <= end; i++) {
-            if(st.find(target - arr[i]) != st.end() && //存在
-               visited.find(target - arr[i]) == visited.end()) {//没被访问过
-                tmp.push_back(target - arr[i]);
-                tmp.push_back(arr[i]);
-                res.push_back(tmp);
+    void twoSum(vector<int>& new_nums,
+               int target,
+               int start,
+               int end,
+               vector<int>& tmp,
+               vector<vector<int>>& results)
+    {
+        unordered_set<int> set_nums; // 记录某个数字是否存在，去重
+        unordered_set<int> visited_nums; // 记录某个数字是否访问过
+        for(int i = start; i < new_nums.size(); i++)
+        {
+            
+        // }
+        // for(int i = start; i < new_nums.size(); i++)
+        // {
+            if(set_nums.count(target - new_nums[i]) &&
+              !visited_nums.count(target - new_nums[i]))
+            {
+                tmp.push_back(new_nums[i]);
+                tmp.push_back(target - new_nums[i]);
+                results.push_back(tmp);
                 tmp.pop_back();
                 tmp.pop_back();
-                
-                visited.insert(arr[i]);
-                visited.insert(target - arr[i]);
+                visited_nums.insert(new_nums[i]);
+                visited_nums.insert(target - new_nums[i]);
             }
-            st.insert(arr[i]);
+            // 不知道两个for为什么要放在一起写，不放在一起就报错[-1,0,1,2,-1,-4]会出现[-4,2,2]
+            set_nums.insert(new_nums[i]);
         }
     }
 };
+
