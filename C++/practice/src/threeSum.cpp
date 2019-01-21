@@ -53,7 +53,8 @@ public:
         // 返回值
         vector<vector<int>> results;
         
-        for(int k = 0; k < nums.size(); k++)
+        // 遍历到倒数第3个数就行，加一个 -2 leetcode 快了4ms
+        for(int k = 0; k < nums.size()-2; k++)
         {
             // 先剪枝， 如果 a >0,则后面所有数字>0，则没有可行解(首字母>0 的情况包含在内了)
             if(nums[k] > 0) {continue;}
