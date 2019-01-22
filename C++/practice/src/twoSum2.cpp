@@ -15,7 +15,7 @@ Explanation: The sum of 2 and 7 is 9. Therefore index1 = 1, index2 = 2.
 */
 
 // 法1
-// 两根指针 相向而行 O(n)
+// 两根指针 相向而行 O(n) 最佳方法
 // while(left <= right)
 // sum == target 返回
 // sum < target left ++
