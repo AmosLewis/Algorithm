@@ -70,3 +70,68 @@ private:
         return false;
     }
 };
+
+// 
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<pair<int, int>>& prerequisites) {
+        // BFS 
+        // 目标是，从所有入度为0的所有点出发，遍历完BFS所有节点以后，
+        // 再次遍历入度数组，只有入度全部为0才表示没有环，入度大于0就有环
+        
+        // 创建一个邻接表，数组ID表示课程号， 每一行表示子课程
+        graph_ = vector<vector<int>>(numCourses);
+        // 创建一个入度表，数组ID表示课程号，每一行表示对应节点入度
+        vector<int> degrees(numCourses, 0);
+        
+        queue<int> Q;
+        // 遍历输入对，构造邻接表，入度数组
+        for(const auto& it: prerequisites)
+        {
+            // 获得课程依赖关系索引ID
+            int parentID = it.second;
+            int childID = it.first;
+            // 构造邻接表
+            graph_[parentID].push_back(childID);
+            // 构造入度数组
+            degrees[childID]++;
+        }
+        
+        // 遍历一次入度数组，向Q中插入入度为0的点
+        for(int ID = 0; ID < numCourses; ID++)
+        {
+            if(degrees[ID] == 0)
+            {
+                Q.push(ID);
+            }
+        }
+        
+        while(!Q.empty())
+        {
+            int parentID = Q.front();
+            Q.pop();
+            
+            for(const auto& childID: graph_[parentID])
+            {
+                degrees[childID]--;
+                if(degrees[childID] == 0)
+                {
+                    Q.push(childID);
+                }
+            }
+            
+        }
+        
+        // 遍历每个节点的入度，如果有非0值，则有环
+        for(const auto& degree: degrees)
+        {
+            if(degree != 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+public:
+    vector<vector<int>> graph_;
+};
