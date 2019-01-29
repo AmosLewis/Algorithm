@@ -93,7 +93,7 @@ public:
             int childID = it.first;
             // 构造邻接表
             graph_[parentID].push_back(childID);
-            // 构造入度数组
+            // 构造入度数组,【注意】 是对孩子++
             degrees[childID]++;
         }
         
@@ -113,6 +113,7 @@ public:
             
             for(const auto& childID: graph_[parentID])
             {
+                // 【注意】是对孩子--
                 degrees[childID]--;
                 if(degrees[childID] == 0)
                 {
