@@ -42,7 +42,7 @@ public:
     {
         ListNode tmp_head(0); // 创建零时头节点类，用于保存返回的头指针，也用于下一行获取迭代用指针
         ListNode* pre = &tmp_head; // 头节点指针， 后面添加新节点始终移动这个指针
-        while(l1 && l2)  // 当任意一个List没有遍历完
+        while(l1 && l2)  // 当任意一个List没有遍历完，while，而不是if
         {
             if(l1->val < l2->val)
             {
@@ -56,7 +56,7 @@ public:
             }
             pre = pre->next; // 头节点自己向前移动一步，每次pre都是当前已经构建好的list的尾部
         }
-        if(l1) // l1 此时已经是原来l1剩余部分的头节点
+        if(l1) // l1 此时已经是原来l1剩余部分的头节点, 别写成 
         {
             pre->next = l1; // l1更长一点，剩余部分直接接在pre 后面
         }
