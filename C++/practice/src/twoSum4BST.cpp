@@ -58,3 +58,35 @@ public:
         return dfs_tree(node->left, target, my_set) || dfs_tree(node->right, target, my_set);
     }
 };
+
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool findTarget(TreeNode* root, int k) {
+        // 方法2 二叉树BFS, 还是用hash表的思想，把所有值放入set中查询
+        if(!root) return false;
+        queue<TreeNode*> Q{{root}}; // 用{{}}初始化而不是在后面push，会加快代码
+        unordered_set<int> my_set;
+        
+        while(!Q.empty())
+        {
+            TreeNode* node  = Q.front();
+            Q.pop();
+            if(my_set.count(k - node->val)) return true;
+            my_set.insert(node->val);
+            if(node->left) Q.push(node->left);
+            if(node->right) Q.push(node->right);
+        }
+        
+        return false;
+    }
+};
