@@ -201,3 +201,40 @@ This is the example code
 	//post
 
 '''
+
+### std::async && std::future
+async is used for more abstracy task. future is used for store value for future process
+
+'''
+
+	#include <iostream>
+	#include <thread>
+	#include <mutex>
+	#include <vector>
+	#include <condition_variable>
+	#include <future>
+	#include <chrono>
+	using namespace std;
+
+	int func()
+	{
+	    cout<<__func__<<" is running"<<endl;
+	    this_thread::sleep_for(chrono::seconds(1));
+	    cout<<"ans is ready"<<endl;
+	    return 42;
+	}
+
+
+	int main()
+	{
+	    cout << "Main: Hello, world!" << endl;
+
+	    future<int> ans = async(launch::async, func);
+	    this_thread::sleep_for(chrono::milliseconds(100));
+	    cout<<__func__<<" is running." << endl;
+	    cout<<ans.get()<<endl;
+
+	    return 0;
+	}
+
+'''
