@@ -338,3 +338,57 @@ The reason it is separated into these two separate "interfaces" is to hide the "
 	}
 
 '''
+
+
+### std::atomic
+
+'''
+
+	#include <iostream>
+	#include <array>
+	#include <thread>
+	#include <mutex>
+	#include <atomic>
+	//using namespace std;
+	std::mutex mu;
+
+	class Counter
+	{
+	public:
+		std::mutex mutex;
+		std::atomic<int> value2;
+		int value;
+
+		Counter(): value(0), value2(3){}
+
+		void Increment1(){
+			std::lock_guard<std::mutex> lg(mu);
+			++value;
+		}
+
+		void Increment2()
+		{
+			++value2;
+		}
+
+		int get()
+		{
+			return value2.load();
+		}
+	};
+
+	int main()
+	{
+		std::array<std::array<int, 3>, 3> arr{{0}};
+	    std::cout << "Hello, world!" << arr[1][1]<< std::endl;
+
+		unsigned int c = std::thread::hardware_concurrency();
+		std::cout<<c<<std::endl;
+		Counter A;
+		A.Increment2();
+		int a = A.get();
+		std::cout<<a<<std::endl;
+	    return 0;
+	}
+
+'''
