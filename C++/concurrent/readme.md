@@ -9,6 +9,12 @@ This is the example code
 
 ### std::thread
 
+The class thread represents a single thread of execution. Threads allow multiple functions to execute concurrently.
+
+Threads begin execution immediately upon construction of the associated thread object (pending any OS scheduling delays), starting at the top-level function provided as a constructor argument. The return value of the top-level function is ignored and if it terminates by throwing an exception, std::terminate is called. The top-level function may communicate its return value or an exception to the caller via std::promise or by modifying shared variables (which may require synchronization, see std::mutex and std::atomic)
+
+
+
 '''
 
 	void my_thread1(int n)
