@@ -287,6 +287,13 @@ std::future provides a mechanism to access the result of asynchronous operations
 
 The class template std::promise provides a facility to store a value or an exception that is later acquired asynchronously via a std::future object created by the std::promise object. Note that the std::promise object is meant to be used only once.
 
+std::promise is used by the "producer/writer" of the asynchronous operation.
+
+std::future is used by the "consumer/reader" of the asynchronous operation.
+
+The reason it is separated into these two separate "interfaces" is to hide the "write/set" functionality from the "consumer/reader"
+
+
 '''
 
 	#include <vector>
