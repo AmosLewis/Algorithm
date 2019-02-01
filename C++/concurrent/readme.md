@@ -380,7 +380,7 @@ The reason it is separated into these two separate "interfaces" is to hide the "
 	int main()
 	{
 		std::array<std::array<int, 3>, 3> arr{{0}};
-	    std::cout << "Hello, world!" << arr[1][1]<< std::endl;
+	    	std::cout << "Hello, world!" << arr[1][1]<< std::endl;
 
 		unsigned int c = std::thread::hardware_concurrency();
 		std::cout<<c<<std::endl;
@@ -388,7 +388,7 @@ The reason it is separated into these two separate "interfaces" is to hide the "
 		A.Increment2();
 		int a = A.get();
 		std::cout<<a<<std::endl;
-	    return 0;
+	    	return 0;
 	}
 
 '''
