@@ -277,6 +277,8 @@ std::future provides a mechanism to access the result of asynchronous operations
 
 ### std::promise
 
+The class template std::promise provides a facility to store a value or an exception that is later acquired asynchronously via a std::future object created by the std::promise object. Note that the std::promise object is meant to be used only once.
+
 '''
 
 	#include <vector>
