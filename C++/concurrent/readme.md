@@ -1,5 +1,7 @@
 [https://yq.aliyun.com/articles/584964]
 
+[https://blog.csdn.net/lijinqi1987/article/details/78507623]
+
 main()如果需要等待新thread退出，则新thread实例需要使用join(),
 
 main()如果需要等待新thread，则新thread实例可以使用detach(), 不建议使用detach(),使用后脱离main独自在后台允许，容易导致程序崩溃。
