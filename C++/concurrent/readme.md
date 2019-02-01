@@ -96,7 +96,7 @@ This is the example code
 	#include <thread>
 	#include <mutex>
 	#include <vector>
-	#include <condition_variable>
+	#include <condition_variable> // communication between thread
 	using namespace std;
 
 	mutex m;
@@ -133,4 +133,68 @@ This is the example code
 
 	    //return 0;
 	}
+'''
+
+
+'''
+
+#include <iostream>
+#include <thread>
+#include <mutex>
+#include <vector>
+#include <condition_variable>
+using namespace std;
+
+
+class Semaphore
+{
+    mutex m;
+    condition_variable cv;
+    int m_value;
+public:
+    Semaphore(int init): m_value(init){}
+    
+    void post();
+    void wait();
+    
+};
+
+void Semaphore::post()
+{
+    {
+        unique_lock<mutex> lck(m);
+        cout<<"post"<<endl;
+        ++m_value;
+    }
+    cv.notify_one(); // if notify_all, consume a lot of CPU
+}
+
+void Semaphore::wait()
+{
+    unique_lock<mutex> lck(m);
+    cout<<"wait"<<endl;
+    while(m_value == 0)
+    {
+        cv.wait(lck);
+    }
+    --m_value;
+}
+
+
+
+int main()
+{
+    cout << "Main: Hello, world!" << endl;
+	
+	Semaphore m_Semaphore(0);
+	
+    thread t1(&Semaphore::post, &m_Semaphore);
+    thread t2(&Semaphore::wait, &m_Semaphore);
+    
+    t1.join();
+    t2.join();
+	
+    //return 0;
+}
+
 '''
