@@ -6,6 +6,9 @@ main()如果需要等待新thread，则新thread实例可以使用detach(), 不�
 
 This is the example code
 
+
+### std::thread
+
 '''
 
 	void my_thread1(int n)
@@ -31,7 +34,20 @@ This is the example code
 '''
 
 
+### std::mutex
+	
+The mutex class is a synchronization primitive that can be used to protect shared data from being simultaneously accessed by multiple threads.
 
+mutex offers exclusive, non-recursive ownership semantics:
+
+A calling thread owns a mutex from the time that it successfully calls either lock or try_lock until it calls unlock.
+
+When a thread owns a mutex, all other threads will block (for calls to lock) or receive a false return value (for try_lock) if they attempt to claim ownership of the mutex.
+
+A calling thread must not own the mutex prior to calling lock or try_lock.
+The behavior of a program is undefined if a mutex is destroyed while still owned by any threads, or a thread terminates while owning a mutex. The mutex class satisfies all requirements of Mutex and StandardLayoutType.
+
+std::mutex is neither copyable nor movable.
 
 '''
 
@@ -59,6 +75,14 @@ This is the example code
 	    //return 0;
 	}
 '''
+
+### std::unique_lock
+The class unique_lock is a general-purpose mutex ownership wrapper allowing deferred locking, time-constrained attempts at locking, recursive locking, transfer of lock ownership, and use with condition variables.
+
+The class unique_lock is movable, but not copyable -- it meets the requirements of MoveConstructible and MoveAssignable but not of CopyConstructible or CopyAssignable.
+
+The class unique_lock meets the BasicLockable requirements. If Mutex meets the Lockable requirements, unique_lock also meets the Lockable requirements (ex.: can be used in std::lock); if Mutex meets the TimedLockable requirements, unique_lock also meets the TimedLockable requirements.
+
 
 '''
 
@@ -88,6 +112,10 @@ This is the example code
 	    //return 0;
 	}
 '''
+
+### std::condition_variable
+
+The condition_variable class is a synchronization primitive that can be used to block a thread, or multiple threads at the same time, until another thread both modifies a shared variable (the condition), and notifies the condition_variable.
 
 
 '''
@@ -135,6 +163,8 @@ This is the example code
 	}
 '''
 
+
+### Semaphore hand-definied
 
 '''
 
@@ -203,7 +233,12 @@ This is the example code
 '''
 
 ### std::async && std::future
-async is used for more abstracy task. future is used for store value for future process
+
+async is used for more abstracy task. future is used for store value for future process.
+
+The template function async runs the function f asynchronously (potentially in a separate thread which may be part of a thread pool) and returns a std::future that will eventually hold the result of that function call.
+
+std::future provides a mechanism to access the result of asynchronous operations:
 
 '''
 
