@@ -61,6 +61,7 @@ This is the example code
 '''
 
 '''
+
 	mutex m;
 
 	void my_thread1()
@@ -83,6 +84,52 @@ This is the example code
 	    {
 		t.join();
 	    }
+
+	    //return 0;
+	}
+'''
+
+
+'''
+
+	#include <iostream>
+	#include <thread>
+	#include <mutex>
+	#include <vector>
+	#include <condition_variable>
+	using namespace std;
+
+	mutex m;
+	condition_variable cv;
+
+	void my_thread1()
+	{
+	    unique_lock<mutex> lck(m);
+	    cout<<"waiting"<<endl;// protect by lock
+	    cv.wait(lck);
+	    cout<<"wake up"<<endl;
+	}
+
+	void my_thread2()
+	{
+	    {
+		lock_guard<mutex> lck(m);
+		cout<<"notify"<<endl;
+	    }
+	    cv.notify_one();
+	}
+
+
+
+	int main()
+	{
+	    cout << "Main: Hello, world!" << endl;
+
+	    thread t1(my_thread1);
+	    thread t2(my_thread2);
+
+	    t1.join();
+	    t2.join();
 
 	    //return 0;
 	}
