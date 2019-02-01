@@ -6,30 +6,30 @@ This is the example code
 
 '''
 
-#include <iostream>
-	
-#include <thread>
-	
-using namespace std;
+	#include <iostream>
 
-void my_thread1(int n)
-{
-    for(int i = 0; i < 5; i++)
-    {
-	    cout<<"my_thread: Hello, world!"<< n <<endl;
-    }
-}
+	#include <thread>
 
-int main()
-{
-    cout << "Main: Hello, world!" << endl;
-	
-	thread t1(my_thread1, 1);
-	thread t2(my_thread1, 2);
-	t1.join();
-	t2.join();
-	
-    //return 0;
-}
+	using namespace std;
+
+	void my_thread1(int n)
+	{
+	    for(int i = 0; i < 5; i++)
+	    {
+		    cout<<"my_thread: Hello, world!"<< n <<endl;
+	    }
+	}
+
+	int main()
+	{
+	    cout << "Main: Hello, world!" << endl;
+
+		thread t1(my_thread1, 1);
+		thread t2(my_thread1, 2);
+		t1.join();
+		t2.join();
+
+	    //return 0;
+	}
 
 '''
