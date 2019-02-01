@@ -196,5 +196,8 @@ This is the example code
 
 	    //return 0;
 	}
+	//Main: Hello, world!
+	//wait
+	//post
 
 '''
