@@ -342,6 +342,8 @@ The reason it is separated into these two separate "interfaces" is to hide the "
 
 ### std::atomic
 
+The atomic library provides components for fine-grained atomic operations allowing for lockless concurrent programming. Each atomic operation is indivisible with regards to any other atomic operation that involves the same object. Atomic objects are free of data races.
+
 '''
 
 	#include <iostream>
