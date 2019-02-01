@@ -59,3 +59,31 @@ This is the example code
 	    //return 0;
 	}
 '''
+
+'''
+	mutex m;
+
+	void my_thread1()
+	{
+	    unique_lock<mutex> lck(m, try_to_lock);
+	    cout<<(lck.owns_lock() ? '*' : 'X');
+	}
+
+	int main()
+	{
+	    cout << "Main: Hello, world!" << endl;
+
+	    vector<thread> threads;
+	    for(int i = 0; i < 50; i++)
+	    {
+		threads.emplace_back(my_thread1);
+	    }
+
+	    for(auto& t: threads)
+	    {
+		t.join();
+	    }
+
+	    //return 0;
+	}
+'''
