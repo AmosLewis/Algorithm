@@ -34,10 +34,6 @@ This is the example code
 
 
 '''
-	#include <iostream>
-	#include <thread>
-	#include <mutex>
-	using namespace std;
 
 	mutex m;
 
