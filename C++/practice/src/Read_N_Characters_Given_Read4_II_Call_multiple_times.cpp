@@ -35,6 +35,9 @@ public:
             }
             
             // 循环n次，用读指针读出tmp 覆盖buf
+            // 有可能上一次调用read后，有些字符串还在里面没有读， readPos还没读到4
+            // 这里一定是readPos < writePos，不可能有readPos > writePos的情况
+            // readPos == writePos 的情况上面已经处理过了
             buf[i] = tmp[readPos++];
             
         }
