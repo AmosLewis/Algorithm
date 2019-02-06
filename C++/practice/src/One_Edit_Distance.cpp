@@ -1,3 +1,7 @@
+/*
+http://www.cnblogs.com/grandyang/p/5184698.html
+*/
+
 class Solution {
 public:
     bool isOneEditDistance(string s, string t) {
