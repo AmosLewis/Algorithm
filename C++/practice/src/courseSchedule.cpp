@@ -28,6 +28,7 @@ You may assume that there are no duplicate edges in the input prerequisites.
 class Solution {
 public:
     bool canFinish(int numCourses, vector<pair<int, int>>& prerequisites) {
+        // O(n)
         // 用index 表示课程ID，创建邻接表，第二项表示child课程
         graph_ = vector<vector<int>>(numCourses);
         // 用index 表示课程ID， 创建记录访问状态的矩阵 0 not visit, 1 visiting, 2 visited 
@@ -55,7 +56,7 @@ private:
     // 如果找到图返回ture
     bool dfsAdajecentGraph(vector<int>& status, int& id)
     {
-        if(status[id] == 1) return true; // 访问到已经访问过的点，有环，返回true
+        if(status[id] == 1) return true; // 访问到正在访问的点，有环，返回true
         if(status[id] == 2) return false; // 该点已经访问过了，没环，跳过；
         
         // 该节点正在访问
