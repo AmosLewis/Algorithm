@@ -16,10 +16,12 @@ public:
         int res = root->val;
         while(root)
         {
+            // 更新返回值
             if(abs(res - target) >= abs(root->val - target))
             {
                 res = root->val;
             }
+            // 小的往左，大的往右
             root = root->val > target ? root->left : root->right;
         }
         return res;
