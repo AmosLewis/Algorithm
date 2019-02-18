@@ -109,7 +109,7 @@ public:
             // 使得已经走过的点一定 左< pivot < 右
             if(left <= right)
             {
-                swap(nums, left, right);
+                swap(nums[left], nums[right]);
                 left++;
                 right--;
             }
@@ -136,15 +136,6 @@ public:
         //[5 1 3 2 4] 3 -> [2 1(right) 3(target) 5(right) 4]
         return nums[target_index];
         
-    }
-    
-    // 手写交换数组中两个元素
-    void swap(vector<int> &nums, int left, int right)
-    {
-        int tmp = nums[left];
-        nums[left] = nums[right];
-        nums[right] = tmp;
-        return;
     }
     
 };
