@@ -39,3 +39,28 @@ public:
         }
     }
 };
+
+// 法二 位运算
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> results;
+        int n = nums.size();
+        
+        // 枚举所有情况2^n 种
+        for(int i = 0; i < 1 << n; i++)
+        {
+            vector<int> result;
+            for(int s = 0; s < n; s++)
+            {
+                // 找出i的哪一位为1，找到，那么对应的nums的位就是s
+                if(i & (1 << s))
+                {
+                    result.push_back(nums[s]);
+                }
+            }
+            results.push_back(result);
+        }
+        return results;
+    }
+};
