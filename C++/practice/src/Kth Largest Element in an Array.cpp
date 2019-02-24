@@ -116,7 +116,7 @@ public:
         }
         
         // 此时 right < left
-        // [start <= target_index <= right < left] 
+        // [start <= target_index <= right < left                                           ] 
         // 在[start                  right]之间排序 
         if(target_index <= right)
         {
@@ -125,7 +125,7 @@ public:
              // ->[2 1 3 4(start tartget right) 5]
             return partition(nums, start, right, target_index);
         }
-        // [right < left <= target_index <= end] 
+        // [                                             right < left <= target_index <= end] 
         // 在       [left                   end]之间排序 
         if(target_index >=left)
         {
