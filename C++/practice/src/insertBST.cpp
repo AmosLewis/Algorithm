@@ -11,6 +11,7 @@ TreNode* insertBST(TreeNode* root, int target)
 	if(root->key < target)
 	{
 		// 常见错误， 漏写root->right,白忙活
+		// 这个方法的劣质是会有冗余，这个方法始终要做写操作
 		root->right = insertBST(root->right, target);
 	}else if(target < root->key)
 	{
