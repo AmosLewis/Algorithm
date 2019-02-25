@@ -40,6 +40,27 @@ public:
     }
 };
 
+// 外for
+// n 0{}                                 {}
+// n 1{}              
+// n 2{}                   
+// n 3{}   
+
+// n 0{}                                 {}
+// n 1{}              {1}               {2}             {3}
+// n 2{}                
+// n 3{}  
+
+// n 0{}                                 {}
+// n 1{}              {1}               {2}             {3}
+// n 2{}        {1,2}     {1,3}       {2,3}             
+// n 3{} 
+
+// n 0{}                                 {}
+// n 1{}              {1}               {2}             {3}
+// n 2{}        {1,2}     {1,3}       {2,3}             
+// n 3{}   {1,2,3}
+
 // 法二 位运算
 class Solution {
 public:
@@ -64,3 +85,39 @@ public:
         return results;
     }
 };
+
+// 法3 来offer递归求子集通解 最优解
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> results;
+        vector<int> temp;
+        findSubSet(nums, 0, temp, results);
+        return results;
+    }
+    void findSubSet(vector<int>& nums, // 输入数组
+                    int level,  // 是否+了nums[level - 1]
+                    vector<int>& temp, // 零时存放一个结果
+                    vector<vector<int>>& results)// 满足条件的所有结果
+    {
+        // out put the result at last level 最后一层才满足条件，中间层都不操作
+        if(level == nums.size())
+        {
+            results.push_back(temp);
+            return;
+        }
+        
+        temp.push_back(nums.at(level));
+        findSubSet(nums, level + 1, temp, results);
+        temp.pop_back();
+        findSubSet(nums, level + 1, temp, results);
+    }
+};
+
+// level 0                              {}
+// level 1                  {1}                     {}
+// level 2          {1,2}        {1}        {2}             {}
+// level 3   {1,2,3}     {12}  {1,2} {1}  {2,3} {2}       {3}   {}
+// level 3 is the output
+// space complexity: O(n)
+// tiem complexity: 2^0 + 2^1 + ... 2^n = 1(1-2^n)/(1-2) = 2^n
