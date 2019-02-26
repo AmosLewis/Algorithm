@@ -19,7 +19,7 @@ string removeletters(string& input)
 	{
 		if(input[j] == 'u' || input[j] == 'n')
 		{
-			j++;
+			j++;// j 多走一次
 		}else
 		{
 			input[i++] = input[j++];
