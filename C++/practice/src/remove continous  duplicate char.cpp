@@ -116,7 +116,7 @@ string removeDuplicatesContinous(string& str)
 		return str;
 	}
 	int s = -1; 
-	int f = 1;
+	int f = 0;
 	while(f < str.size())
 	{
 		char c = s[f];
@@ -152,7 +152,7 @@ string removeDuplicatesContinous(string& str)
 		return str;
 	}
 	int s = -1; 
-	int f = 1;
+	int f = 0;
 	while(f < str.size())
 	{
 		char c = s[f];
